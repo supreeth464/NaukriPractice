@@ -1,0 +1,36 @@
+name: 🧪 Scheduled Selenium Cucumber Tests
+
+on:
+  schedule:
+    - cron: '30 5 * * 1-5'   # ⏰ Runs Mon–Fri at 11:00 AM IST (5:30 AM UTC)
+  workflow_dispatch:         # 🚀 Allows manual trigger from GitHub
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: ☕ Set up Java 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: 🌐 Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: 🧩 Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+
+      - name: 🔨 Run Maven Tests
+        run: mvn clean test
+
+      - name: 📤 Upload Cucumber Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-report
+          path: target/cucumber-reports/
