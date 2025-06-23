@@ -1,36 +1,58 @@
-name: 🧪 Scheduled Selenium Cucumber Tests
+name: 🚀 Daily Selenium Tests with Email
 
 on:
   schedule:
-    - cron: '30 5 * * 1-5'   # ⏰ Runs Mon–Fri at 11:00 AM IST (5:30 AM UTC)
-  workflow_dispatch:         # 🚀 Allows manual trigger from GitHub
+    - cron: '30 2 * * *'  # 8:00 AM IST = 2:30 AM UTC
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout code
+      - name: 📥 Checkout Code
         uses: actions/checkout@v3
 
-      - name: ☕ Set up Java 11
+      - name: ☕ Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: 17
 
-      - name: 🌐 Set up Chrome
+      - name: 🌐 Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
-      - name: 🧩 Set up ChromeDriver
+      - name: 🧩 Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v2
+        with:
+          chromedriver-version: latest
 
-      - name: 🔨 Run Maven Tests
+      - name: 🛠️ Run Maven Tests
         run: mvn clean test
 
-      - name: 📤 Upload Cucumber Report
-        if: always()
+      - name: 📤 Upload Report Artifact
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-report
           path: target/cucumber-reports/
+
+      - name: 📧 Send Email with Report
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "✅ Daily Selenium Report"
+          to: supreeth464@gmail.com
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+          body: |
+            Hi Supreeth 👋,
+
+            The daily Selenium test run has completed.
+            ✅ Status: All tests executed.
+            And header is updated
+            Please download the full HTML report from GitHub Actions → Artifacts.
+
+            Regards,
+            GitHub Actions
