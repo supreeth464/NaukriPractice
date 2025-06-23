@@ -1,0 +1,12 @@
+# Maven target directory
+/target/
+
+# Ignore Cucumber Reports
+*.html
+*.json
+
+# IDE files (optional)
+.idea/
+*.iml
+
+
