@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "✅ Daily Selenium Report"
-          to: supreeth464@gmail.com
+          to: supreeth464@gmail.com, supreethr1992@gmail.com
           from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
           body: |
             Hi Supreeth 👋,
@@ -50,7 +50,8 @@ jobs:
             The daily Selenium test run has completed.
             ✅ Status: All tests executed.
 
-            Please download the full HTML report from GitHub Actions → Artifacts.
+            Updated Naukari portal header Resume field for daily profile update
+            
 
             Regards,
             GitHub Actions
