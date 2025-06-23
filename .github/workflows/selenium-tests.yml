@@ -24,8 +24,6 @@ jobs:
 
       - name: 🧩 Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v2
-        with:
-          chromedriver-version: latest
 
       - name: 🛠️ Run Maven Tests
         run: mvn clean test
@@ -51,7 +49,7 @@ jobs:
 
             The daily Selenium test run has completed.
             ✅ Status: All tests executed.
-            And header is updated
+
             Please download the full HTML report from GitHub Actions → Artifacts.
 
             Regards,
